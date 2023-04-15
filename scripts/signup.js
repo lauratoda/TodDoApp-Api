@@ -14,6 +14,7 @@ window.addEventListener('load', function () {
     /* -------------------------------------------------------------------------- */
     form.addEventListener('submit', function (event) {
       event.preventDefault();
+      mostrarSpinner()
 
 
     //primero normalizo las entradas
@@ -45,6 +46,7 @@ window.addEventListener('load', function () {
 
     } else {
             console.log("algun campo no es válido")
+            ocultarSpinner()
 
     }
         
@@ -68,12 +70,14 @@ window.addEventListener('load', function () {
                 console.log(data);
                 if(data.jwt){
                     localStorage.setItem('jwt', JSON.stringify(data.jwt));
+                    ocultarSpinner()
                     location.replace('./mis-tareas.html');
                 }
             })
             .catch (err =>{
                 console.log('promesa rechazada');
                 console.log(err)
+                ocultarSpinner()
             })
         }  
     })

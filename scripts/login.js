@@ -12,6 +12,7 @@ window.addEventListener('load', function () {
     /* -------------------------------------------------------------------------- */
     form.addEventListener('submit', function (event) {
        event.preventDefault();
+       mostrarSpinner()
 
        const payload = {
         email : " ",
@@ -32,9 +33,11 @@ window.addEventListener('load', function () {
         
         realizarLogin(settings); 
         form.reset();
+       
 
         } else {
         alert ("los datos no son correctos")
+        ocultarSpinner()
        }
         
     });
@@ -60,12 +63,14 @@ window.addEventListener('load', function () {
                 console.log(data);
                 if(data.jwt){
                     localStorage.setItem('jwt', JSON.stringify(data.jwt));
+                    ocultarSpinner()
                     location.replace('./mis-tareas.html');
                 }
             })
             .catch (err =>{
                 console.log('promesa rechazada');
                 console.log(err)
+                ocultarSpinner()
             })
         }
     })

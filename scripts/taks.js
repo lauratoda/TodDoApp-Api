@@ -6,7 +6,7 @@
 /* ------ comienzan las funcionalidades una vez que carga el documento ------ */
 window.addEventListener('load', function () {
 
-
+  renderizarSkeletons(5, ".tareas-pendientes")
 
   /* ---------------- variables globales y llamado a funciones ---------------- */
   const formCrearTarea = document.querySelector('.nueva-tarea');
@@ -16,12 +16,8 @@ window.addEventListener('load', function () {
   const token = JSON.parse(localStorage.jwt)
   const ingresoNuevaTarea = document.getElementById("nuevaTarea")
 
-
-
   obtenerNombreUsuario();
   consultarTareas();
-
-
 
   /* -------------------------------------------------------------------------- */
   /*                          FUNCIÓN 1 - Cerrar sesión                         */
@@ -33,8 +29,7 @@ window.addEventListener('load', function () {
       localStorage.removeItem("jwt")
       location.replace('./index.html')
     }
-  //borrar token
-  //mandar al index
+
   });
 
 
@@ -63,11 +58,7 @@ window.addEventListener('load', function () {
 
       })
       .catch(err => console.log('promesa rechazada'+ err));
-
-
-
   };
-
 
   /* -------------------------------------------------------------------------- */
   /*                 FUNCIÓN 3 - Obtener listado de tareas [GET]                */
@@ -86,16 +77,17 @@ window.addEventListener('load', function () {
     fetch(urlGetTasks, setting)
       .then (response => response.json())
       .then (tareas => {
+
         console.log(tareas);
         console.table(tareas);
 
-    renderizarTareas(tareas)
-    botonBorrarTarea();
-    botonesCambioEstado()
-
+        renderizarTareas(tareas)
+        botonBorrarTarea();
+        botonesCambioEstado()
+    
       })
       .catch(err => console.log('promesa rechazada'+ err));
-  };
+   };
 
 
   /* -------------------------------------------------------------------------- */
@@ -113,7 +105,6 @@ window.addEventListener('load', function () {
       description: ingresoNuevaTarea.value,
       completed: false
     }
-
 
     const urlGetTasks = 'https://todo-api.ctd.academy/v1/tasks';
     let setting = {
@@ -136,11 +127,6 @@ window.addEventListener('load', function () {
       .catch(err => console.log('promesa rechazada'+ err));
 
       formCrearTarea.reset();
-
-
-
-
-
   });
 
 
@@ -151,7 +137,6 @@ window.addEventListener('load', function () {
 
     //Traigo los listados
     const tareasPendientes = document.querySelector(".tareas-pendientes")
-  
     const tareasTerminadas = document.querySelector(".tareas-terminadas")
 
     //les borro el contenido (si lo tuviesen)
@@ -161,6 +146,7 @@ window.addEventListener('load', function () {
     //buscamos el numero de finalizadas
     const numeroFinalizadas = document.querySelector("#cantidad-finalizadas")
     let contador = 0;
+
     numeroFinalizadas.innerText = contador;
 
     listado.forEach(tarea => { 
@@ -182,7 +168,6 @@ window.addEventListener('load', function () {
             </div>
           </li>
         `
-
       } else {
         tareasPendientes.innerHTML += `
         <li class="tarea" data-aos="flip-up">
@@ -198,6 +183,7 @@ window.addEventListener('load', function () {
     //actualizo el contador de tareas en la pantalla
     numeroFinalizadas.innerText = contador;
   })
+
 }
 
   /* -------------------------------------------------------------------------- */
